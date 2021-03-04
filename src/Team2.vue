@@ -1,15 +1,33 @@
 <template>
   <div class="team2Box">
-    <p class="team2Score">0</p>
+    <p class="team2Score">{{ score }}</p>
     <div class="buttons">
-      <button class="subtractButton">-</button>
-      <button class="addButton">+</button>
+      <button class="subtractButton" @click="scoreDecrement">-</button>
+      <button class="addButton" @click="scoreIncrement">+</button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      score: 0,
+    };
+  },
+  methods: {
+    scoreIncrement() {
+      this.score += 1;
+    },
+    scoreDecrement() {
+      if (this.score == 0) {
+        return 0;
+      } else {
+        this.score -= 1;
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
