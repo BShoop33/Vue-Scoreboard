@@ -23,7 +23,7 @@
         Team 2
       </h1>
     </div>
-    <h3 class="scoreStatus">{{ scoreStatus }}</h3>
+    <h3 class="scoreStatus">{{ scoreStatus }} {{ pointOrPoints }}</h3>
     <div class="scores">
       <div class="team1Box">
         <p class="team1Score">{{ team1Score }}</p>
@@ -33,6 +33,7 @@
             @click="
               scoreDecrementTeam1();
               teamWinning();
+              pointStatus();
             "
           >
             -
@@ -42,6 +43,7 @@
             @click="
               scoreIncrementTeam1();
               teamWinning();
+              pointStatus();
             "
           >
             +
@@ -56,6 +58,7 @@
             @click="
               scoreDecrementTeam2();
               teamWinning();
+              pointStatus();
             "
           >
             -
@@ -65,6 +68,7 @@
             @click="
               scoreIncrementTeam2();
               teamWinning();
+              pointStatus();
             "
           >
             +
@@ -84,6 +88,7 @@ export default {
       team2Score: 0,
       team1Winning: false,
       team2Winning: false,
+      pointOrPoints: "",
     };
   },
 
@@ -125,6 +130,16 @@ export default {
         (this.team1Winning = false), (this.team2Winning = false);
       }
     },
+    pointStatus() {
+      this.team1Score == this.team2Score
+        ? (this.pointOrPoints = "")
+        : (this.team1Score == 1 && this.team1Score - 1 != 0) ||
+          (this.team2Score == 1 && this.team2Score - 1 != 0) ||
+          this.team1Score - this.team2Score == 1 ||
+          this.team2Score - this.team1Score == 1
+        ? (this.pointOrPoints = "point")
+        : (this.pointOrPoints = "points");
+    },
   },
 
   computed: {
@@ -136,9 +151,9 @@ export default {
     scoreStatus() {
       const score =
         this.team1Score > this.team2Score
-          ? `Team 1 is leading by ${this.team1Score - this.team2Score} points`
+          ? `Team 1 is leading by ${this.team1Score - this.team2Score}`
           : this.team2Score > this.team1Score
-          ? `Team 2 is leading by ${this.team2Score - this.team1Score} points`
+          ? `Team 2 is leading by ${this.team2Score - this.team1Score}`
           : "The game is currently tied";
       return score;
     },
